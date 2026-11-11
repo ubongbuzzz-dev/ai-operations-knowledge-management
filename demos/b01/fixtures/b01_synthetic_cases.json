@@ -1,0 +1,14 @@
+{
+  "context": {"selected_topic": null, "previous_explicit_topic": "APG_POST_DESIGN_EXECUTION", "has_competing_referents": true, "action_authorized": false},
+  "requests": [
+    "Continue original parent at its literal end",
+    "Return to APG work before UCP",
+    "Continue where we left off",
+    "Check scheduler handoff"
+  ],
+  "claims": [
+    {"claim_id":"incident_is_recorded","source_type":"historical_record","contains_private_data":true},
+    {"claim_id":"simulation_runs_locally","source_type":"synthetic_test","contains_private_data":false},
+    {"claim_id":"real_world_fix_permanently_works","source_type":"not_verified","contains_private_data":false}
+  ]
+}

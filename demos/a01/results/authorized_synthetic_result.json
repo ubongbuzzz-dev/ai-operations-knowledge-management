@@ -1,0 +1,49 @@
+{
+  "source_decision": {
+    "status": "RESOLVED",
+    "selected": {
+      "source_id": "alpha-owner-r2",
+      "deadline": "2026-11-18",
+      "revision": 2,
+      "verified": true,
+      "authority": "project_owner"
+    }
+  },
+  "historical_deadline": "2026-11-20",
+  "current_deadline": "2026-11-18",
+  "proposed_blocks": [
+    {
+      "start": "2026-11-18T11:00",
+      "end": "2026-11-18T12:00",
+      "label": "Project Alpha work",
+      "protected": false
+    },
+    {
+      "start": "2026-11-18T12:00",
+      "end": "2026-11-18T13:00",
+      "label": "Project Alpha work",
+      "protected": false
+    }
+  ],
+  "committed_blocks": [
+    {
+      "start": "2026-11-18T11:00",
+      "end": "2026-11-18T12:00",
+      "label": "Project Alpha work",
+      "protected": false
+    },
+    {
+      "start": "2026-11-18T12:00",
+      "end": "2026-11-18T13:00",
+      "label": "Project Alpha work",
+      "protected": false
+    }
+  ],
+  "task_status": "NOT_COMPLETED",
+  "existing_preserved": true,
+  "events": [
+    "Owner revision 2 selected; earlier deadline kept as history",
+    "Synthetic commit and read-back checks passed"
+  ],
+  "status": "SYNTHETIC_COMMIT_VERIFIED"
+}

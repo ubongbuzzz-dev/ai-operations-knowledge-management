@@ -1,0 +1,59 @@
+{
+  "scenarios": [
+    {
+      "request": "Continue original parent at its literal end",
+      "result": {
+        "status": "CONTEXT_RESOLVED",
+        "topic": "UCP_VALIDATION",
+        "permitted_action": "REVIEW_ONLY",
+        "notes": "Resuming a topic is not authorization for external application/calendar actions."
+      }
+    },
+    {
+      "request": "Return to APG work before UCP",
+      "result": {
+        "status": "CONTEXT_RESOLVED",
+        "topic": "APG_POST_DESIGN_EXECUTION",
+        "permitted_action": "REVIEW_ONLY",
+        "notes": "Resuming a topic is not authorization for external application/calendar actions."
+      }
+    },
+    {
+      "request": "Continue where we left off",
+      "result": {
+        "status": "CLARIFICATION_REQUIRED",
+        "topic": null,
+        "permitted_action": "NONE"
+      }
+    },
+    {
+      "request": "Check scheduler handoff",
+      "result": {
+        "status": "CONTEXT_RESOLVED",
+        "topic": "SCHEDULER_HANDOFF_STATUS",
+        "permitted_action": "REVIEW_ONLY",
+        "notes": "Resuming a topic is not authorization for external application/calendar actions."
+      }
+    }
+  ],
+  "claim_review": [
+    {
+      "claim_id": "incident_is_recorded",
+      "evidence_class": "historical_record",
+      "is_live_behavior_verified": false,
+      "public_ready": false
+    },
+    {
+      "claim_id": "simulation_runs_locally",
+      "evidence_class": "synthetic_test",
+      "is_live_behavior_verified": false,
+      "public_ready": true
+    },
+    {
+      "claim_id": "real_world_fix_permanently_works",
+      "evidence_class": "not_verified",
+      "is_live_behavior_verified": false,
+      "public_ready": false
+    }
+  ]
+}

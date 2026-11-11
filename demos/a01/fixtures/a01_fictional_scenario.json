@@ -1,0 +1,11 @@
+{
+  "scenario": "FICTIONAL example, not drawn from any user's real calendar or coursework",
+  "old_source": {"source_id": "alpha-owner-r1", "deadline": "2026-11-20", "revision": 1, "verified": true, "authority": "project_owner"},
+  "new_source": {"source_id": "alpha-owner-r2", "deadline": "2026-11-18", "revision": 2, "verified": true, "authority": "project_owner"},
+  "existing_blocks": [
+    {"start":"2026-11-18T09:00", "end":"2026-11-18T11:00", "label":"Fixed commitment A", "protected":true},
+    {"start":"2026-11-18T14:00", "end":"2026-11-18T16:00", "label":"Fixed commitment B", "protected":true},
+    {"start":"2026-11-18T17:00", "end":"2026-11-18T18:00", "label":"Fixed commitment C", "protected":true}
+  ],
+  "needed_minutes": 120
+}
