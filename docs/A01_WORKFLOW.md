@@ -1,33 +1,40 @@
 # A01 | Coordinating a deadline change
 
-**Example:** Executable fictional scenario illustrating the scheduling-handoff design.
+**Scenario:** A fictional project deadline changes while existing commitments must remain protected. The included Python model makes the scheduling-handoff rules reproducible.
 
-## Challenge
+## The situation
 
-A project deadline moves from Friday, November 20, 2026, to Wednesday, November 18. The updated requirement competes for time against existing protected commitments. The scenario tests how source changes move into operational decisions while retaining accurate status records.
+Project Alpha's owner moves the deadline from **Friday, November 20, 2026**, to **Wednesday, November 18**. Work needs to be allocated before the new deadline without moving fixed commitments.
 
-## Rules demonstrated
+The fictional input includes three protected blocks on November 18: **9–11 a.m., 2–4 p.m., and 5–6 p.m.** The model looks for two hours of available work time.
 
-1. Select the latest authorized requirement over a superseded deadline.
-2. Preserve a traceable record of the change.
-3. Evaluate candidate scheduling intervals against protected commitments.
-4. Apply authorized changes through a controlled action step.
-5. Report simulated persistence failures explicitly.
-6. Maintain distinct scheduling and task-completion states.
+## What the design does
 
-## Test outcomes
-
-| Scenario | Reference-model outcome |
+| Step | Decision or result |
 |---|---|
-| Awaiting approval | `AWAITING_AUTHORIZATION` |
-| Approved simulated commit | `SYNTHETIC_COMMIT_VERIFIED` |
-| Simulated write failure | `WRITE_FAILED_NO_COMMIT` |
-| Capacity shortage | `INSUFFICIENT_CAPACITY` |
+| **1. Verify the change** | Select the latest verified project-owner revision; preserve the earlier deadline as history. |
+| **2. Check constraints** | Find available periods without overlapping existing protected blocks. |
+| **3. Propose work time** | Identify two one-hour periods, **11 a.m.–noon** and **noon–1 p.m.**, in the synthetic fixture. |
+| **4. Require approval** | Keep the proposal uncommitted until authorization is provided. |
+| **5. Verify the simulated write** | Confirm the in-memory result or explicitly report a simulated write failure. |
+| **6. Report actual task state** | Keep the underlying project task marked **NOT_COMPLETED**. |
 
-**10/10 automated tests passed** in the local Python reference model. The model exercises the scenario entirely with fictional records and in-memory state.
+The sequence demonstrates why scheduling work and completing work are different events. Even an authorized, successfully simulated scheduling change leaves the task completion status unchanged.
 
-## Connection to the framework
+## Outcomes exercised by the tests
 
-The actual scheduling procedures specify domain ownership, deliberate retrieval of changes, protection of existing commitments, authorization, and verification. A01 translates selected decision rules into an inspectable model with controlled inputs and repeatable outputs.
+| Condition | Model status |
+|---|---|
+| Scheduling proposal awaiting approval | `AWAITING_AUTHORIZATION` |
+| Authorized simulated commit with in-memory verification | `SYNTHETIC_COMMIT_VERIFIED` |
+| Simulated persistence failure | `WRITE_FAILED_NO_COMMIT` |
+| Insufficient available time | `INSUFFICIENT_CAPACITY` |
+| Newer owner revision has not been verified | `BLOCKED_NEWER_UNVERIFIED` |
 
-[Run the example](REPRODUCE.md)
+**10/10 automated unit tests passed** for the fictional Python reference model. The test suite covers source selection, authorization, scheduling conflicts, capacity, write failure, and accurate status reporting.
+
+## Why it matters
+
+A changing deadline creates at least three separate responsibilities: establish what changed, decide where the work fits, and verify what actually happened. The framework assigns each to an explicit part of the process, reducing ambiguity when requirements cross workspace boundaries.
+
+[Run A01](REPRODUCE.md) · [Return to the architecture](ARCHITECTURE.md)

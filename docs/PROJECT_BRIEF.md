@@ -2,37 +2,39 @@
 
 **Independent systems-design project | 2026–present**
 
-## Opportunity
+## The challenge
 
-As I managed multiple academic, professional, project, and leadership commitments, I saw how information became fragmented across workspaces, documents, and schedules. Changing requirements created coordination problems around priorities, decision history, and execution status.
+Managing coursework, career development, student leadership, and independent projects across different conversations, documents, and calendars created an information problem. Requirements changed in one place, but planning elsewhere could still reflect older decisions. It was also difficult to establish which action had merely been planned and which had actually been carried out.
 
-## Solution
+## My solution
 
-I designed and refined a shared operational framework that gives each workstream ownership of its requirements while standardizing information management, change coordination, and quality control.
+I designed and iteratively refined an AI-assisted operations framework that maintains clear ownership of each workstream's requirements while coordinating changes across shared processes.
 
-The framework uses three knowledge layers—current state, detailed decision history, and primary sources—alongside explicit authority rules, scheduling handoffs, and verification procedures.
+I organized information into three layers—current state, decision history, and original evidence—and established procedures for verifying sources, handling updated requirements, coordinating scheduling decisions, and checking the results of authorized actions.
 
-## Key design decisions
+## Design choices that matter
 
-1. **Ownership before coordination.** Each workstream maintains its authoritative information, and shared processes use targeted handoffs.
-2. **Current state and history serve different purposes.** Relevant information stays readily available while the reasoning behind past decisions remains retrievable.
-3. **Execution requires evidence.** Proposed, authorized, scheduled, completed, and verified are separately tracked states.
-4. **Operational failures drive process refinement.** A real context-selection incident prompted more precise source and authorization rules.
+- **Keep each workstream accountable for its information.** Shared coordination follows the latest verified owner requirement.
+- **Preserve the reasoning behind changes.** Current decisions stay accessible, while superseded requirements and primary sources remain traceable.
+- **Separate planning from execution.** Proposed, authorized, scheduled, completed, and verified are different statuses.
+- **Improve the process when it fails.** A historical context-selection error informed revisions to how the framework interprets continuation requests and action authority.
 
-## Demonstrations
+## What this looks like
 
-**A01:** A fictional deadline-change workflow with 10 passing local tests, covering source authority, authorization, capacity, and commitments.
+In a fictional, reproducible scenario, a project deadline moves up two days. The A01 model verifies the revised deadline, identifies work periods around fixed commitments, waits for approval, and keeps task-completion status separate from scheduling. Its 10 automated tests passed.
 
-**B01:** A documented continuity incident and corrective design, accompanied by a fictional reference model with 11 passing tests.
+A second case study, B01, documents how I analyzed a real continuity error and refined the procedures for selecting historical context and determining which actions are authorized. A companion fictional model passed 11 automated tests.
 
-## Professional value
+[Read A01](A01_WORKFLOW.md) · [Read B01](B01_FAILURE_AND_RECOVERY.md)
 
-This project demonstrates my approach to systems problems: identify coordination failures, establish requirements, design information and responsibility structures, create controlled interfaces, investigate exceptions, and refine the operating model through use.
+## Professional relevance
+
+This project illustrates my ability to identify operational friction, translate it into requirements, design connected processes, establish information ownership, diagnose failures, and improve a system through iteration and verification.
 
 ## Interview explanation (60–90 seconds)
 
-> I designed an AI-assisted operations and knowledge management framework because I was managing several complex commitments across different workspaces, documents, and schedules, and I wanted a more reliable way to coordinate them. I organized the system around three layers of information: what's current, the history behind decisions, and the original evidence. Then I defined clear ownership rules, so each workstream controls its own requirements, and handoff procedures, so changing priorities can be reconciled with the schedule. I also built in checks that distinguish planning from execution and verify consequential updates. One of the most valuable iterations came from a real continuity failure: the information had been preserved, but the assistant selected the wrong work to resume. I traced the issue to context selection and authorization, and refined the framework accordingly. The project strengthened my ability to design processes, connect business requirements with technology, and improve systems based on evidence.
+> I designed an AI-assisted operations framework because I was managing multiple projects and commitments across different workspaces, documents, and calendars. A requirement could change in one place while another plan still relied on the old version. I organized the system around three layers: what is current, the history behind decisions, and the original evidence. Each workstream owns its requirements, while shared procedures verify important changes and coordinate them with scheduling. For example, if a project deadline moves, the system's rules are designed to check the new source, account for existing commitments, and distinguish time scheduled from work completed. I also refined the framework after a real continuity error exposed a weakness in selecting the right historical context. The project reflects the kind of work I enjoy: understanding an operations problem, designing a practical system, and improving it as I learn from use.
 
 ## Methods
 
-I developed the framework through iterative design, operational use, source review, and correction of observed issues. The repository includes two fictional, executable Python reference models that illustrate selected design controls and support repeatable testing.
+The framework evolved through design, operational use, record review, and correction of observed problems. The repository includes two fictional Python reference models with 21 passing automated tests to make selected design decisions inspectable.

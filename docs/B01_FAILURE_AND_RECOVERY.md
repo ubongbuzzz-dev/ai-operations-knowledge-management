@@ -1,41 +1,39 @@
 # B01 | Improving continuity through failure analysis
 
-**Case:** Historical operational incident and targeted remediation, supported by a fictional decision-model demonstration.
+**Case study:** A documented operational incident, corrective design changes, and a separate fictional decision-model demonstration.
 
-## Situation
+## What happened
 
-A long-running conversation had been preserved and indexed for continuation. When the user requested a return to earlier work, the assistant resumed an unintended recruiting workflow. A subsequent response narrowed the request to a scheduling handoff rather than the correct broader context.
+A long-running conversation had been preserved and indexed. When the user asked to return to work from before a continuity-protocol discussion, the assistant resumed an unrelated recruiting task. After correction, it selected an overly narrow scheduling handoff instead of the intended broader work context.
 
-The incident highlighted an important operating challenge: **accurate records still require accurate interpretation**.
+The information was available. **The failure was in selecting the right part of it and deciding what to do next.**
 
-## Root-cause analysis
+## Diagnosis
 
-The investigation identified three interacting factors:
+I identified three connected process weaknesses:
 
-- **Conversational referent selection:** choosing the wrong historical stopping point for the user's present request
-- **Action-authority interpretation:** treating earlier discussion as authorization to resume a particular workflow
-- **Source freshness:** using incomplete cross-workspace status when more precise historical context was available
+- **Context selection:** Multiple historical stopping points could be interpreted as “where we left off.”
+- **Authority to act:** Resuming a topic was being treated as permission to perform a specific task.
+- **Source selection:** More precise historical records were available than the summary being used to infer the next step.
 
-## Design refinement
+## What I refined
 
-I used this analysis to strengthen the framework's context-selection and authority procedures. The remediation established separate treatment for:
+I strengthened the source-review and continuation procedures to distinguish:
 
-1. The literal last subject of a prior conversation
-2. The earlier work specifically referenced in a new request
-3. An adjacent task whose authorization and completion status require their own verification
+1. The literal final topic of a historical conversation
+2. The point in that history the user's current request actually identifies
+3. Nearby unfinished work whose status and authorization must be checked separately
 
-The revised approach calls for targeted source review, explicit preservation of completed decisions, and more precise selection of the next operational action.
+The revised rules call for checking the appropriate source, preserving already settled decisions, and selecting the next action based on the user's present instructions.
 
-## Documented result
+## Historical result and evidence
 
-The incident was analyzed on November 4, 2026, and a targeted remediation record documented corrected source interpretation and operational guidance. The record separates the original user's actual request from several plausible—but different—historical stopping points.
+The November 4, 2026 remediation record documents the context-selection investigation and corrective operating guidance. An earlier protocol deployment that day had passed a separate, limited continuation test. That test preceded the incident.
 
-A protocol deployment earlier that day had its own limited continuation test. The later incident therefore provides a useful lesson: passing an earlier bounded test and preserving the historical archive did not prevent a new context-selection error. Subsequent effectiveness of the November 4 targeted repair is an area for further behavioral evaluation.
+The case demonstrates why **preserving information and interpreting a request accurately are distinct design requirements**. The corrective procedures are documented; continued real-world effectiveness requires further behavioral observation.
 
 ## Reproducible companion
 
-An executable fictional Python model illustrates context-selection and authorization rules. **11/11 local tests passed.** Its results are reported separately from historical operations and earlier protocol testing.
+A fictional Python reference model evaluates context selection and authorization decisions using controlled inputs. **11/11 automated tests passed** in the local model.
 
-## Takeaway
-
-**Preserving information, choosing the right context, and authorizing the right action are distinct systems requirements.** Treating them separately makes continuity procedures more robust and easier to audit.
+[Reproduce the example](REPRODUCE.md) · [Review the evidence approach](EVIDENCE_AND_METHODOLOGY.md)

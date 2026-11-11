@@ -1,91 +1,55 @@
 # AI-Assisted Operations & Knowledge Management Framework
 
-**Systems design · Workflow orchestration · Information governance · Quality assurance**  
-**Independent systems-design project | 2026–present**
+**Independent systems-design project · 2026–present**  
+**Business systems analysis · Workflow coordination · Information governance · Applied AI**
 
-I designed and iteratively refined an **AI-assisted operations and knowledge management framework** to coordinate complex workstreams, preserve decision history, manage changing requirements, and strengthen execution accountability. It supports academic operations, professional development, project management, scheduling, and organizational leadership through shared governance and distinct domain ownership.
+I designed and iteratively refined an **AI-assisted operations framework** to keep multiple workstreams aligned as requirements, priorities, and commitments change. It brings together project ownership, decision history, scheduling coordination, and checks that distinguish planned actions from verified results.
 
-**The challenge:** How can independent workstreams stay coordinated as their requirements, priorities, sources, and commitments change—while keeping decisions traceable and execution status accurate?
-
-## Problem and approach
-
-Managing concurrent initiatives across conversations, documents, and calendars created recurring challenges: fragmented context, outdated requirements, competing obligations, unclear handoffs, and difficult-to-verify progress.
-
-I treated these as **systems and operations design problems**. I established a layered information architecture, defined ownership and source-authority rules, connected changes to scheduling decisions, and introduced verification and recovery procedures. I refined the framework through operational use, investigating errors and adjusting its controls as new needs emerged.
+**The problem:** Across coursework, career development, student leadership, and independent projects, important information lived in separate conversations, documents, and calendars. An updated deadline in one workspace could leave another plan relying on an older version. I wanted a system that could trace the change, identify the next action, and preserve what had already been decided.
 
 ## What I designed
 
-| System capability | Design decision | Value delivered |
-|---|---|---|
-| **Tiered knowledge management** | Separate current operational state, detailed decision history, and original source material | More targeted retrieval with preserved context |
-| **Information governance** | Track provenance, supersession, corrections, and authoritative versions | More reliable decisions as requirements change |
-| **Domain ownership** | Each workstream maintains its own requirements, state, and supporting evidence | Clear accountability and controlled cross-workspace changes |
-| **Operational handoffs** | Route relevant demand updates to a dedicated scheduler | Coordinate capacity, priorities, and protected commitments |
-| **Execution accountability** | Track requests, approvals, scheduling, execution, and verification distinctly | More meaningful progress reporting |
-| **Quality assurance and recovery** | Use source checks, change verification, targeted audits, and failure remediation | Stronger error detection and process improvement |
+| Component | Role in the system |
+|---|---|
+| **Workstream ownership** | Each project maintains its requirements, decisions, and progress. |
+| **Three-layer knowledge structure** | Current state (**HOT**), decision history (**WARM**), and original evidence (**COLD**) serve different retrieval needs. |
+| **Source and change controls** | New information is checked against its source; replaced decisions remain traceable. |
+| **Scheduling handoffs** | Verified changes are considered alongside available time and protected commitments. |
+| **Execution checks** | Proposed, authorized, scheduled, completed, and verified work are tracked separately. |
 
-## Architecture
+## How it works
 
 ```mermaid
 flowchart TD
-    A[Requirements, changes, and source evidence] --> B[Domain-owned workspaces]
-    B --> C[Current State / HOT]
-    B --> D[Decision history / WARM]
-    B --> E[Primary evidence / COLD]
-    C --> F{Current and authoritative?}
-    D --> F
-    E -. Retrieve as needed .-> F
-    F -->|Verified material change| G[Controlled handoff]
-    F -->|Conflict or uncertainty| H[Source review and escalation]
-    G --> I[Scheduling: capacity and constraints]
-    I --> J{Approved action?}
-    J -->|Pending| K[Record decision required]
-    J -->|Approved| L[Execute through available tools]
-    L --> M[Verify outcome and update status]
+    A[Requirement changes in a workstream] --> B{Source verified?}
+    B -->|No| C[Review original evidence]
+    C --> B
+    B -->|Yes| D[Update current state and decision history]
+    D --> E{Action needed?}
+    E -->|Yes| F[Check constraints and authorization]
+    F --> G[Execute and verify result]
+    E -->|No| H[Keep records current]
+    G --> H
 ```
 
-The framework combines structured operating records, ChatGPT workspaces, and file-management and scheduling tools. Its design coordinates distinct workstreams through shared information and decision controls while respecting each area's ownership and the user's authorization.
+The operating rules connect ChatGPT workspaces, structured records, and scheduling and file-management tools. Each workstream remains responsible for its own information, while shared procedures guide changes that affect other areas.
 
-[Explore the architecture and operating model](docs/ARCHITECTURE.md)
+[Explore the full architecture](docs/ARCHITECTURE.md).
 
-## Case studies
+## Two examples
 
-### A01 · Coordinating a changing deadline
+**A01 — A deadline moves.** In a fictional scenario, a project deadline changes from **November 20 to November 18**. The model selects the verified update, finds work periods around protected commitments, and waits for authorization before recording a simulated change. It never marks the underlying task complete simply because time was scheduled. **10/10 automated tests passed.** [See the workflow](docs/A01_WORKFLOW.md).
 
-A deadline changes while existing commitments must remain protected. A reproducible scenario demonstrates source-authority checks, scheduling decisions, authorization, and status verification.
+**B01 — The wrong task gets resumed.** In a documented continuity incident, historical information had been preserved, but the assistant selected the wrong work to continue. I analyzed the context-selection error and refined the rules for source review and action authority. An accompanying fictional reference model tests those decision rules. **11/11 automated tests passed.** [Read the analysis](docs/B01_FAILURE_AND_RECOVERY.md).
 
-**Demonstration:** A fictional project scenario with an executable Python reference model. **10 automated tests passed** across approval, priority, protected-commitment, capacity, and simulated-write conditions.
+## Explore the project
 
-[Explore A01](docs/A01_WORKFLOW.md)
+- [Detailed operating model](docs/ARCHITECTURE.md) · [Project overview](docs/PROJECT_BRIEF.md)
+- [Reproduction guide](docs/REPRODUCE.md) · [Evidence and methodology](docs/EVIDENCE_AND_METHODOLOGY.md)
 
-### B01 · Diagnosing a continuity failure
-
-After a long-running conversation was preserved and recovered, the assistant selected the wrong task to resume. I traced the incident to context selection and premature action inference, then refined rules for interpreting historical stopping points and checking action authority.
-
-**Evidence and demonstration:** A documented historical incident, targeted corrective procedures, and a reproducible Python reference model with **11 passing automated checks**.
-
-[Explore B01](docs/B01_FAILURE_AND_RECOVERY.md)
-
-## Skills demonstrated
-
-**Business systems analysis:** requirements, process mapping, interfaces, ownership, and exception handling.  
-**Information governance:** provenance, version control, state management, and historical continuity.  
-**Operational planning:** dependency management, capacity evaluation, and cross-workspace coordination.  
-**Quality improvement:** root-cause analysis, test design, corrective controls, and verification.  
-**Applied AI:** designing workflows that combine AI-enabled capabilities with clear operational rules and accountability.
-
-## Tools and examples
-
-**Framework:** ChatGPT workspaces, structured text documentation, file-management capabilities, and scheduling tools.  
-**Reproducible examples:** Python 3 standard-library reference models with fictional fixtures and automated tests. These examples make selected design rules inspectable; historical operational cases are documented separately.
-
-Run the examples:
+The demonstrations use Python's standard library and fictional fixtures. To run all 21 local tests:
 
 ```bash
 (cd demos/a01 && python -m unittest discover -s tests -v)
 (cd demos/b01 && python -m unittest discover -s tests -v)
 ```
-
-## Explore
-
-[Architecture](docs/ARCHITECTURE.md) · [Deadline workflow](docs/A01_WORKFLOW.md) · [Continuity incident](docs/B01_FAILURE_AND_RECOVERY.md) · [Reproduction guide](docs/REPRODUCE.md) · [Evidence and methodology](docs/EVIDENCE_AND_METHODOLOGY.md) · [Project overview](docs/PROJECT_BRIEF.md)
