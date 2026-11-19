@@ -1,59 +1,184 @@
 {
   "scenarios": [
     {
+      "case": "original parent literal end",
       "request": "Continue original parent at its literal end",
       "result": {
         "status": "CONTEXT_RESOLVED",
         "topic": "UCP_VALIDATION",
         "permitted_action": "REVIEW_ONLY",
-        "notes": "Resuming a topic is not authorization for external application/calendar actions."
+        "notes": "A historical reference does not authorize unrelated external actions."
       }
     },
     {
-      "request": "Return to APG work before UCP",
+      "case": "last message explicit",
+      "request": "Pick up the parent chat at its final message",
+      "result": {
+        "status": "CONTEXT_RESOLVED",
+        "topic": "UCP_VALIDATION",
+        "permitted_action": "REVIEW_ONLY",
+        "notes": "A historical reference does not authorize unrelated external actions."
+      }
+    },
+    {
+      "case": "before UCP shorthand",
+      "request": "Resume before all the UCP stuff",
       "result": {
         "status": "CONTEXT_RESOLVED",
         "topic": "APG_POST_DESIGN_EXECUTION",
         "permitted_action": "REVIEW_ONLY",
-        "notes": "Resuming a topic is not authorization for external application/calendar actions."
+        "notes": "A historical reference does not authorize unrelated external actions."
       }
     },
     {
-      "request": "Continue where we left off",
+      "case": "real incident plain language",
+      "request": "Go back to what we were doing before the protocol discussion",
+      "result": {
+        "status": "CONTEXT_RESOLVED",
+        "topic": "APG_POST_DESIGN_EXECUTION",
+        "permitted_action": "REVIEW_ONLY",
+        "notes": "A historical reference does not authorize unrelated external actions."
+      }
+    },
+    {
+      "case": "before continuity protocol",
+      "request": "Please return to the work from prior to the continuity protocol",
+      "result": {
+        "status": "CONTEXT_RESOLVED",
+        "topic": "APG_POST_DESIGN_EXECUTION",
+        "permitted_action": "REVIEW_ONLY",
+        "notes": "A historical reference does not authorize unrelated external actions."
+      }
+    },
+    {
+      "case": "after UCP is not before",
+      "request": "Return to APG after UCP",
       "result": {
         "status": "CLARIFICATION_REQUIRED",
         "topic": null,
-        "permitted_action": "NONE"
+        "permitted_action": "NONE",
+        "notes": "Use the user's present request and its actual authorization boundaries."
       }
     },
     {
-      "request": "Check scheduler handoff",
+      "case": "known post-protocol reference",
+      "request": "Return to APG after UCP",
+      "result": {
+        "status": "CONTEXT_RESOLVED",
+        "topic": "APG_AFTER_PROTOCOL",
+        "permitted_action": "REVIEW_ONLY",
+        "notes": "A historical reference does not authorize unrelated external actions."
+      }
+    },
+    {
+      "case": "new resume task not conversation",
+      "request": "Update my resume",
+      "result": {
+        "status": "NEW_REQUEST",
+        "topic": null,
+        "permitted_action": "USER_REQUESTED_SCOPE_ONLY",
+        "notes": "Use the user's present request and its actual authorization boundaries."
+      }
+    },
+    {
+      "case": "new resume review task",
+      "request": "Could you review my resume?",
+      "result": {
+        "status": "NEW_REQUEST",
+        "topic": null,
+        "permitted_action": "USER_REQUESTED_SCOPE_ONLY",
+        "notes": "Use the user's present request and its actual authorization boundaries."
+      }
+    },
+    {
+      "case": "specific scheduler handoff",
+      "request": "Check the scheduler handoff",
       "result": {
         "status": "CONTEXT_RESOLVED",
         "topic": "SCHEDULER_HANDOFF_STATUS",
         "permitted_action": "REVIEW_ONLY",
-        "notes": "Resuming a topic is not authorization for external application/calendar actions."
+        "notes": "A historical reference does not authorize unrelated external actions."
       }
-    }
-  ],
-  "claim_review": [
-    {
-      "claim_id": "incident_is_recorded",
-      "evidence_class": "historical_record",
-      "is_live_behavior_verified": false,
-      "public_ready": false
     },
     {
-      "claim_id": "simulation_runs_locally",
-      "evidence_class": "synthetic_test",
-      "is_live_behavior_verified": false,
-      "public_ready": true
+      "case": "ambiguous continuation multiple topics",
+      "request": "Continue where we left off",
+      "result": {
+        "status": "CLARIFICATION_REQUIRED",
+        "topic": null,
+        "permitted_action": "NONE",
+        "notes": "Use the user's present request and its actual authorization boundaries."
+      }
     },
     {
-      "claim_id": "real_world_fix_permanently_works",
-      "evidence_class": "not_verified",
-      "is_live_behavior_verified": false,
-      "public_ready": false
+      "case": "clear active conversational topic",
+      "request": "Continue where we left off",
+      "result": {
+        "status": "CONTEXT_RESOLVED",
+        "topic": "APG_CURRENT_LEAD",
+        "permitted_action": "REVIEW_ONLY",
+        "notes": "A historical reference does not authorize unrelated external actions."
+      }
+    },
+    {
+      "case": "single prior topic no competitors",
+      "request": "Please resume",
+      "result": {
+        "status": "CONTEXT_RESOLVED",
+        "topic": "APG_POST_DESIGN_EXECUTION",
+        "permitted_action": "REVIEW_ONLY",
+        "notes": "A historical reference does not authorize unrelated external actions."
+      }
+    },
+    {
+      "case": "specific APG from known context",
+      "request": "Return to APG work",
+      "result": {
+        "status": "CONTEXT_RESOLVED",
+        "topic": "APG_POST_DESIGN_EXECUTION",
+        "permitted_action": "REVIEW_ONLY",
+        "notes": "A historical reference does not authorize unrelated external actions."
+      }
+    },
+    {
+      "case": "APG without known checkpoint",
+      "request": "Return to Academic Professional Growth",
+      "result": {
+        "status": "CLARIFICATION_REQUIRED",
+        "topic": null,
+        "permitted_action": "NONE",
+        "notes": "Use the user's present request and its actual authorization boundaries."
+      }
+    },
+    {
+      "case": "explicitly scoped authorization",
+      "request": "Go back to what we were doing before the protocol discussion",
+      "result": {
+        "status": "CONTEXT_RESOLVED",
+        "topic": "APG_POST_DESIGN_EXECUTION",
+        "permitted_action": "USER_AUTHORIZED_SCOPE_ONLY",
+        "notes": "A historical reference does not authorize unrelated external actions."
+      }
+    },
+    {
+      "case": "no instructions",
+      "request": "",
+      "result": {
+        "status": "CLARIFICATION_REQUIRED",
+        "topic": null,
+        "permitted_action": "NONE",
+        "notes": "Use the user's present request and its actual authorization boundaries."
+      }
+    },
+    {
+      "case": "unrelated text",
+      "request": "What is an example of a data source?",
+      "result": {
+        "status": "CLARIFICATION_REQUIRED",
+        "topic": null,
+        "permitted_action": "NONE",
+        "notes": "Use the user's present request and its actual authorization boundaries."
+      }
     }
   ]
 }
