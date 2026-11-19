@@ -8,7 +8,7 @@ The corrective November 4 record distinguished three anchors: the literal end of
 
 A short extract from the actual November 4 corrective record (no private task content reproduced):
 
-> “A bare ‘continue where we left off’ must use the user's immediate conversational referent, not blindly select the newest line of the historical source.”
+> A bare “continue where we left off” must use the user's *immediate conversational referent*, not blindly select the newest line of the historical source.
 
 That is a **documented change to operating guidance**, not proof that every later model response followed it.
 
