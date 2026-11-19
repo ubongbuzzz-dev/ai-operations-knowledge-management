@@ -1,0 +1,31 @@
+name: Python examples
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Compile the example modules
+        run: python -m compileall -q demos/a01/src demos/b01/src
+      - name: A01 unit and edge-case tests
+        run: python -m unittest discover -s demos/a01/tests -v
+      - name: B01 case-based and regression tests
+        run: python -m unittest discover -s demos/b01/tests -v
+      - name: Run example commands
+        run: |
+          python demos/a01/src/a01_simulation.py demos/a01/fixtures/a01_fictional_scenario.json --authorized --commit > /dev/null
+          python demos/b01/src/b01_reference_model.py demos/b01/fixtures/b01_synthetic_cases.json > /dev/null
