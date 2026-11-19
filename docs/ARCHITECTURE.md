@@ -1,64 +1,41 @@
-# Architecture and operating model
+# Architecture | An operations problem with explicit owners
 
-## The design problem
+The framework coordinates information and action across independently owned projects. It is **not** a new task-management website or a single program that automatically updates every workspace.
 
-Changes arrived in separate workspaces, while scheduling and other decisions depended on the latest information from those spaces. I designed the framework to answer four practical questions:
+## The real operating structure
 
-1. **What is the current requirement?**
-2. **Which source and decision history support it?**
-3. **Who owns the information, and what other work is affected?**
-4. **What action is authorized, and how will its result be checked?**
-
-The system brings those questions into a repeatable process.
-
-## Three layers of information
-
-| Layer | What belongs here | When it is used |
+| Layer | Content | Purpose |
 |---|---|---|
-| **HOT — current state** | Active requirements, current decisions, operating rules, and tracked status | Routine planning and execution |
-| **WARM — decision history** | Earlier decisions, corrections, source references, and reasons for changes | Resolving ambiguity and understanding how a decision evolved |
-| **COLD — original evidence** | Source documents, archived records, and detailed conversation history | Checking conflicts or reconstructing an event |
+| **HOT — current state** | Active work, latest decisions, unresolved questions, next action | Fast and accurate everyday continuation |
+| **WARM — history and rationale** | Decision changes, corrections, source map, superseded versions | Explain why the current instruction is authoritative |
+| **COLD — original evidence** | Original records, exports, archived conversations and supporting documents | Resolve serious disputes and verify provenance |
 
-Keeping these layers distinct makes the latest operational information easier to find without losing the evidence behind it.
+The ownership rule is equally important: a project controls its own requirements; the continuity framework defines how to preserve and retrieve context; the scheduling owner considers authorized work against real time constraints. An updated source is **not** an instruction to change another owner's calendar or mark a task complete.
 
-## Who owns what
-
-- **Individual workstreams** manage their requirements, decisions, and progress. For example, a project workspace owns the project's deadline.
-- **The continuity framework** maintains the information structure, source-priority rules, version history, and recovery procedures.
-- **The scheduling workspace** evaluates approved requests against available time, protected commitments, and competing demands.
-- **Verification procedures** distinguish the requested action, the action taken, and the confirmed outcome.
-
-Cross-workspace updates follow the owner's current requirement; older records remain available for review.
-
-## From change to verified outcome
+## From changed requirement to checked result
 
 ```mermaid
 flowchart TD
-    A[Workstream receives a change] --> B{Current and supported by source?}
-    B -->|Unclear| C[Inspect original evidence and history]
+    A[Requirement or deadline changes] --> B{Owner source current and unambiguous?}
+    B -->|No| C[Examine conflicting or original evidence]
     C --> B
-    B -->|Yes| D[Update the workstream's current record]
-    D --> E{Does another area need to act?}
-    E -->|No| F[Preserve the updated state]
-    E -->|Yes| G[Send authorized handoff]
-    G --> H[Check constraints and approval]
-    H --> I[Take permitted action]
-    I --> J[Check the outcome]
-    J --> F
+    B -->|Yes| D[Preserve old and new decisions with provenance]
+    D --> E{Cross-workspace action required?}
+    E -->|No| F[Keep state current]
+    E -->|Yes| G[Check the receiving owner's constraints]
+    G --> H{Authorized?}
+    H -->|No| I[Return proposal only]
+    H -->|Yes| J[Attempt permitted change]
+    J --> K[Read back actual result]
+    K --> F
 ```
 
-### A concrete handoff example
+A practical example is a deadline that changes from November 20 to November 18. The fictional [A01 model](A01_WORKFLOW.md) first establishes which owner's revision is authoritative, then proposes time around existing commitments. It waits for authorization; after an in-memory simulated write, it checks the stored blocks rather than merely asserting that a write occurred. **Scheduling work does not finish the project task.**
 
-*Illustrative scenario; the executable model is in [A01](A01_WORKFLOW.md).*
+The real [B01 incident](B01_FAILURE_AND_RECOVERY.md) illustrates a different risk: complete records can still produce the wrong next step when the assistant interprets the user's historical reference incorrectly. The correction strengthened **which conversation point to select** and **which actions that selection actually permits**.
 
-A project owner moves a deadline from November 20 to November 18. The project record retains the old deadline as history and identifies the newly verified one as current. The scheduling procedure then evaluates whether project work fits around three protected commitments. Two one-hour periods are available in the synthetic fixture; the proposed change waits for authorization before its simulated commit. The resulting status identifies the schedule update separately from completion of the project task.
+## Human design and AI assistance
 
-This is the distinction the architecture is designed to preserve: **information changes, planning decisions, and finished work have different owners and evidence.**
+I defined the problem, information structure, owner boundaries, change controls, decision-state distinctions, and recovery requirements; AI assistance helped implement and document selected parts. The repository's two small Python examples expose those design choices to inspection. They do not replace the actual records or independently test live ChatGPT behavior.
 
-## Quality improvement
-
-I iteratively refined the operating rules through source reviews, corrections, read-back checks, and analysis of an observed continuity failure. The [B01 case study](B01_FAILURE_AND_RECOVERY.md) shows how a misinterpreted historical stopping point led to more precise context-selection and action-authority procedures.
-
-## Tools and demonstrations
-
-The framework uses ChatGPT workspaces, structured text records, file-management capabilities, and scheduling tools. The repository's Python examples make selected design rules reproducible using fictional inputs. [Run both examples](REPRODUCE.md).
+[Evidence and selected real-record excerpts](EVIDENCE_AND_METHODOLOGY.md) · [Project README](../README.md)
