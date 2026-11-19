@@ -1,40 +1,47 @@
 # A01 | Coordinating a deadline change
 
-**Scenario:** A fictional project deadline changes while existing commitments must remain protected. The included Python model makes the scheduling-handoff rules reproducible.
+**Fictional, executable case.** A project's verified owner moves a deadline from **November 20 to November 18, 2026**. The model considers work periods on **November 18 between 9 a.m. and 6 p.m.**; it does not search earlier days or know the actual deadline hour. Three existing commitments are protected.
 
-## The situation
+## Decision sequence
 
-Project Alpha's owner moves the deadline from **Friday, November 20, 2026**, to **Wednesday, November 18**. Work needs to be allocated before the new deadline without moving fixed commitments.
-
-The fictional input includes three protected blocks on November 18: **9–11 a.m., 2–4 p.m., and 5–6 p.m.** The model looks for two hours of available work time.
-
-## What the design does
-
-| Step | Decision or result |
+| Step | What is checked or produced |
 |---|---|
-| **1. Verify the change** | Select the latest verified project-owner revision; preserve the earlier deadline as history. |
-| **2. Check constraints** | Find available periods without overlapping existing protected blocks. |
-| **3. Propose work time** | Identify two one-hour periods, **11 a.m.–noon** and **noon–1 p.m.**, in the synthetic fixture. |
-| **4. Require approval** | Keep the proposal uncommitted until authorization is provided. |
-| **5. Verify the simulated write** | Confirm the in-memory result or explicitly report a simulated write failure. |
-| **6. Report actual task state** | Keep the underlying project task marked **NOT_COMPLETED**. |
+| 1. Establish the requirement | Consider verified project-owner revisions, reject newer unverified updates, and flag different deadlines with the same current revision |
+| 2. Check available time | Find exact free intervals around commitments, including partial hours, without moving existing blocks |
+| 3. Propose | In the included fixture, propose 11 a.m.–noon and noon–1 p.m. |
+| 4. Await authorization | Proposals are not committed until both authorization and explicit commit are present |
+| 5. Write and read back | Write to an independent **in-memory calendar** and compare the full resulting block list against the expected state |
+| 6. Report actual state | Report a failure on simulated write/read-back mismatch; retain the separate project task status **NOT_COMPLETED** |
 
-The sequence demonstrates why scheduling work and completing work are different events. Even an authorized, successfully simulated scheduling change leaves the task completion status unchanged.
+The model also checks for a protected block inserted **after planning but before commit**, illustrating why a conflict check is needed at the write boundary.
 
-## Outcomes exercised by the tests
+## Outcomes implemented by the model
 
-| Condition | Model status |
+| Status | Meaning |
 |---|---|
-| Scheduling proposal awaiting approval | `AWAITING_AUTHORIZATION` |
-| Authorized simulated commit with in-memory verification | `SYNTHETIC_COMMIT_VERIFIED` |
-| Simulated persistence failure | `WRITE_FAILED_NO_COMMIT` |
-| Insufficient available time | `INSUFFICIENT_CAPACITY` |
-| Newer owner revision has not been verified | `BLOCKED_NEWER_UNVERIFIED` |
+| `INVALID_INPUT` | Malformed source, calendar block, day, or time requirement |
+| `BLOCKED_UNVERIFIED_SOURCE` | No verified owner source |
+| `BLOCKED_NEWER_UNVERIFIED` | A newer owner revision needs verification |
+| `BLOCKED_CONFLICTING_OWNER_REVISION` | Equal latest owner revisions disagree about the deadline |
+| `INSUFFICIENT_CAPACITY` | Work does not fit in the specified deadline-day window |
+| `AWAITING_AUTHORIZATION` | Time proposed; change not approved |
+| `AUTHORIZED_PROPOSAL_ONLY` | Approved proposal, but no commit requested |
+| `BLOCKED_CONFLICT` | A new commitment conflicts with a previously prepared proposal |
+| `WRITE_FAILED_NO_COMMIT` | Injected simulated write failure |
+| `WRITE_VERIFICATION_FAILED` | Injected read-back corruption detected and rolled back |
+| `SYNTHETIC_COMMIT_VERIFIED` | Exact **in-memory** read-back matched; task still not completed |
 
-**10/10 automated unit tests passed** for the fictional Python reference model. The test suite covers source selection, authorization, scheduling conflicts, capacity, write failure, and accurate status reporting.
+The public Python model exercises those states in local tests. `existing_preserved` is derived from the resulting calendar snapshot instead of being hard-coded. The successful status refers to **this simulation's state only**: it is not evidence of an external API write, durable disk persistence, or a real calendar change.
 
-## Why it matters
+## Reproduce
 
-A changing deadline creates at least three separate responsibilities: establish what changed, decide where the work fits, and verify what actually happened. The framework assigns each to an explicit part of the process, reducing ambiguity when requirements cross workspace boundaries.
+From the repository root:
 
-[Run A01](REPRODUCE.md) · [Return to the architecture](ARCHITECTURE.md)
+```bash
+python -m unittest discover -s demos/a01/tests -v
+python demos/a01/src/a01_simulation.py demos/a01/fixtures/a01_fictional_scenario.json --authorized --commit
+python demos/a01/src/a01_simulation.py demos/a01/fixtures/a01_fictional_scenario.json --authorized --commit --write-fail
+python demos/a01/src/a01_simulation.py demos/a01/fixtures/a01_fictional_scenario.json --authorized --commit --readback-fail
+```
+
+The point is **decision and status integrity**, not an optimal multi-day scheduler. [Architecture](ARCHITECTURE.md) · [Evidence boundaries](EVIDENCE_AND_METHODOLOGY.md).
