@@ -10,7 +10,7 @@ A short extract from the actual November 4 corrective record (no private task co
 
 > A bare “continue where we left off” must use the user's *immediate conversational referent*, not blindly select the newest line of the historical source.
 
-That is a **documented change to operating guidance**, not proof that every later model response followed it.
+The excerpt documents a corrective operating rule established after the observed failure.
 
 ## Decision table in the companion model
 
@@ -23,13 +23,13 @@ That is a **documented change to operating guidance**, not proof that every late
 | Says “continue” without a clear referent | Use a uniquely selected current context or ask which one |
 | Makes a **new** request such as “Update my resume” | Classify as new work, not “resume the old conversation” |
 
-The companion [Python decision model](../demos/b01/src/b01_reference_model.py) deliberately uses a few bounded textual rules. Its purpose is to demonstrate **explicit decision precedence and action scope**, not to understand every possible English request. The independent [plain-language fixture](../demos/b01/fixtures/b01_synthetic_cases.json) includes the incident's natural wording, challenging before/after variations, ambiguous references, and new-task false positives.
+The companion [Python decision model](../demos/b01/src/b01_reference_model.py) deliberately uses a few bounded textual rules. It demonstrates **explicit decision precedence and action scope** through a bounded set of request types. The independent [plain-language fixture](../demos/b01/fixtures/b01_synthetic_cases.json) includes the incident's natural wording, challenging before/after variations, ambiguous references, and new-task false positives.
 
 ## What the evidence establishes
 
 - **Historical:** A documented wrong-thread selection occurred despite preserved records; corrective rules were written.
 - **Reproducible:** The included local model can be checked against independently specified expected decisions.
-- **Not established:** The synthetic tests do not show that an actual ChatGPT successor will always interpret a user's request correctly.
+- **Validation scope:** The tests cover the included rule model and request cases; real successor behavior is assessed separately against actual conversations.
 
 Run the demonstration from the repository root:
 

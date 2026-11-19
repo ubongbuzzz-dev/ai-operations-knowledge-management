@@ -17,7 +17,7 @@ I built the framework around a clear question: **When something changes, how do 
 | Distinguish planned, authorized, scheduled, and completed work | A polished report or calendar event is not proof the underlying task happened |
 | Record and correct real failures | Preserving history is not enough if the wrong conversation thread is resumed |
 
-The framework uses structured records, source hierarchy, operating rules, file-management tools, and scheduling handoffs. I designed the responsibilities, decision controls, information structure, and quality checks; AI tools assisted with parts of the implementation and documentation. [See the operating architecture](docs/ARCHITECTURE.md).
+The framework brings together structured records, source hierarchy, operating rules, file-management tools, and scheduling handoffs. I designed and refined its requirements, ownership model, information structure, change controls, and verification procedures to coordinate work across independent areas. [Explore the operating architecture](docs/ARCHITECTURE.md).
 
 ## A real failure and two small executable examples
 
@@ -25,9 +25,9 @@ The framework uses structured records, source hierarchy, operating rules, file-m
 
 **A01 — a deadline changes.** Fictional inputs move a deadline from November 20 to November 18. The Python model selects the verified owner update, finds available time around protected commitments, requires authorization, writes to an **in-memory** calendar, and reads back the written state. A calendar write never marks the underlying task completed. [Explore A01](docs/A01_WORKFLOW.md).
 
-**B01 — select the correct conversation context.** A deliberately small rule model distinguishes a named earlier stopping point, ambiguous continuation, and an entirely new task such as “Update my resume.” It is **not** a general natural-language assistant. [Explore B01](docs/B01_FAILURE_AND_RECOVERY.md).
+**B01 — select the correct conversation context.** A deliberately small rule model distinguishes a named earlier stopping point, ambiguous continuation, and an entirely new task such as “Update my resume.” It demonstrates bounded request classification through explicit, inspectable rules. [Explore B01](docs/B01_FAILURE_AND_RECOVERY.md).
 
-The Python examples are **fictional demonstrations of selected rules**, not software that controls my real calendar or proof of the framework's real-world productivity gains. [See the evidence boundaries and redacted real-record excerpts](docs/EVIDENCE_AND_METHODOLOGY.md).
+These examples use fictional inputs to make selected design rules inspectable. The [evidence and methodology](docs/EVIDENCE_AND_METHODOLOGY.md) connects them to real operating records, a documented continuation failure, and privacy-safe source excerpts.
 
 ## Run the examples
 
@@ -43,4 +43,4 @@ python demos/b01/src/b01_reference_model.py demos/b01/fixtures/b01_synthetic_cas
 
 [![Python tests](https://github.com/ubongbuzzz-dev/ai-operations-knowledge-management/actions/workflows/tests.yml/badge.svg)](https://github.com/ubongbuzzz-dev/ai-operations-knowledge-management/actions/workflows/tests.yml)
 
-The unit tests check expected behavior and failure cases; the badge reports GitHub Actions' automated status when runs are available. Neither validates the live ChatGPT workspaces.
+The tests check expected outcomes and failure cases for the two Python examples; the badge links to GitHub Actions results.

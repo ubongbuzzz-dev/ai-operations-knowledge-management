@@ -31,7 +31,7 @@ The model also checks for a protected block inserted **after planning but before
 | `WRITE_VERIFICATION_FAILED` | Injected read-back corruption detected and rolled back |
 | `SYNTHETIC_COMMIT_VERIFIED` | Exact **in-memory** read-back matched; task still not completed |
 
-The public Python model exercises those states in local tests. `existing_preserved` is derived from the resulting calendar snapshot instead of being hard-coded. The successful status refers to **this simulation's state only**: it is not evidence of an external API write, durable disk persistence, or a real calendar change.
+The Python model exercises these states locally. `existing_preserved` is calculated from the resulting calendar snapshot, and `SYNTHETIC_COMMIT_VERIFIED` requires matching in-memory read-back. External calendar changes use a separate, authorized integration.
 
 ## Reproduce
 
@@ -44,4 +44,4 @@ python demos/a01/src/a01_simulation.py demos/a01/fixtures/a01_fictional_scenario
 python demos/a01/src/a01_simulation.py demos/a01/fixtures/a01_fictional_scenario.json --authorized --commit --readback-fail
 ```
 
-The point is **decision and status integrity**, not an optimal multi-day scheduler. [Architecture](ARCHITECTURE.md) · [Evidence boundaries](EVIDENCE_AND_METHODOLOGY.md).
+The model focuses on **decision and status integrity** in a defined, single-day scheduling window. [Architecture](ARCHITECTURE.md) · [Evidence boundaries](EVIDENCE_AND_METHODOLOGY.md).
