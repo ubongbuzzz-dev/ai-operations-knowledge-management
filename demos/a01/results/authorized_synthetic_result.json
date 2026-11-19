@@ -42,8 +42,8 @@
   "task_status": "NOT_COMPLETED",
   "existing_preserved": true,
   "events": [
-    "Owner revision 2 selected; earlier deadline kept as history",
-    "Synthetic commit and read-back checks passed"
+    "Verified owner revision 2 selected; old deadline retained as history",
+    "In-memory calendar write read back and matched exactly"
   ],
   "status": "SYNTHETIC_COMMIT_VERIFIED"
 }
