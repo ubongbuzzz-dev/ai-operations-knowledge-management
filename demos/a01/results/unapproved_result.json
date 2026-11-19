@@ -29,8 +29,8 @@
   "task_status": "NOT_COMPLETED",
   "existing_preserved": true,
   "events": [
-    "Owner revision 2 selected; earlier deadline kept as history",
-    "No changes committed without authorization"
+    "Verified owner revision 2 selected; old deadline retained as history",
+    "No calendar change without authorization"
   ],
   "status": "AWAITING_AUTHORIZATION"
 }
