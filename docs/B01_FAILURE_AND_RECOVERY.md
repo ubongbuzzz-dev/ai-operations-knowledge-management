@@ -1,39 +1,41 @@
-# B01 | Improving continuity through failure analysis
+# B01 | Recovering the correct work after a context-selection failure
 
-**Case study:** A documented operational incident, corrective design changes, and a separate fictional decision-model demonstration.
+**Real incident, separate fictional rule demonstration.** In November 2026, a conversation had accumulated several stopping points: ongoing professional-development work, a later discussion about a continuity protocol, and a migration handoff. When asked to return to work from **before** the protocol discussion, the assistant resumed an unrelated task. After correction, it narrowed the request to one scheduling handoff. The records were available; **selection and interpretation failed**.
 
-## What happened
+## What the incident changed
 
-A long-running conversation had been preserved and indexed. When the user asked to return to work from before a continuity-protocol discussion, the assistant resumed an unrelated recruiting task. After correction, it selected an overly narrow scheduling handoff instead of the intended broader work context.
+The corrective November 4 record distinguished three anchors: the literal end of the original conversation, the earlier substantive work checkpoint, and the later migration-administration exchange. It also required that returning to a topic **not be treated as authorization for an unrelated action**.
 
-The information was available. **The failure was in selecting the right part of it and deciding what to do next.**
+A short extract from the actual November 4 corrective record (no private task content reproduced):
 
-## Diagnosis
+> “A bare ‘continue where we left off’ must use the user's immediate conversational referent, not blindly select the newest line of the historical source.”
 
-I identified three connected process weaknesses:
+That is a **documented change to operating guidance**, not proof that every later model response followed it.
 
-- **Context selection:** Multiple historical stopping points could be interpreted as “where we left off.”
-- **Authority to act:** Resuming a topic was being treated as permission to perform a specific task.
-- **Source selection:** More precise historical records were available than the summary being used to infer the next step.
+## Decision table in the companion model
 
-## What I refined
+| Request type | Model behavior |
+|---|---|
+| Names a particular point in conversation history | Resolve that point; default to review, not external action |
+| Says **before** a protocol discussion | Select the earlier work checkpoint |
+| Says **after** a protocol discussion | Use a known post-protocol checkpoint, otherwise clarify—never silently substitute *before* |
+| Names a scheduler handoff | Return the distinct scheduler status topic |
+| Says “continue” without a clear referent | Use a uniquely selected current context or ask which one |
+| Makes a **new** request such as “Update my resume” | Classify as new work, not “resume the old conversation” |
 
-I strengthened the source-review and continuation procedures to distinguish:
+The companion [Python decision model](../demos/b01/src/b01_reference_model.py) deliberately uses a few bounded textual rules. Its purpose is to demonstrate **explicit decision precedence and action scope**, not to understand every possible English request. The independent [plain-language fixture](../demos/b01/fixtures/b01_synthetic_cases.json) includes the incident's natural wording, challenging before/after variations, ambiguous references, and new-task false positives.
 
-1. The literal final topic of a historical conversation
-2. The point in that history the user's current request actually identifies
-3. Nearby unfinished work whose status and authorization must be checked separately
+## What the evidence establishes
 
-The revised rules call for checking the appropriate source, preserving already settled decisions, and selecting the next action based on the user's present instructions.
+- **Historical:** A documented wrong-thread selection occurred despite preserved records; corrective rules were written.
+- **Reproducible:** The included local model can be checked against independently specified expected decisions.
+- **Not established:** The synthetic tests do not show that an actual ChatGPT successor will always interpret a user's request correctly.
 
-## Historical result and evidence
+Run the demonstration from the repository root:
 
-The November 4, 2026 remediation record documents the context-selection investigation and corrective operating guidance. An earlier protocol deployment that day had passed a separate, limited continuation test. That test preceded the incident.
+```bash
+python -m unittest discover -s demos/b01/tests -v
+python demos/b01/src/b01_reference_model.py demos/b01/fixtures/b01_synthetic_cases.json
+```
 
-The case demonstrates why **preserving information and interpreting a request accurately are distinct design requirements**. The corrective procedures are documented; continued real-world effectiveness requires further behavioral observation.
-
-## Reproducible companion
-
-A fictional Python reference model evaluates context selection and authorization decisions using controlled inputs. **11/11 automated tests passed** in the local model.
-
-[Reproduce the example](REPRODUCE.md) · [Review the evidence approach](EVIDENCE_AND_METHODOLOGY.md)
+[Real-record excerpts and source distinctions](EVIDENCE_AND_METHODOLOGY.md) · [Architecture](ARCHITECTURE.md)
