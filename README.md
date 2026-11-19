@@ -2,7 +2,7 @@
 
 **Independent business-systems design project | 2026–present**
 
-I designed an AI-assisted operating framework to coordinate **eight academic workstreams** alongside career, leadership, and independent projects. The problem was practical: requirements, deadlines, and decisions lived in separate workspaces, documents, and calendars. A change could be recorded in one place while another area continued using the older information.
+I designed an operating framework to coordinate **eight academic workstreams** alongside career, leadership, and independent projects. The problem was practical: requirements, deadlines, and decisions lived in separate workspaces, documents, and calendars. A change could be recorded in one place while another area continued using the older information.
 
 I built the framework around a clear question: **When something changes, how do we establish what is current, determine who owns the decision, coordinate any follow-up, and verify what actually happened?**
 
