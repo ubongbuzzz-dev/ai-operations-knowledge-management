@@ -1,55 +1,46 @@
-# AI-Assisted Operations & Knowledge Management Framework
+# Operations & Knowledge Management Framework
 
-**Independent systems-design project · 2026–present**  
-**Business systems analysis · Workflow coordination · Information governance · Applied AI**
+**Independent business-systems design project | 2026–present**
 
-I designed and iteratively refined an **AI-assisted operations framework** to keep multiple workstreams aligned as requirements, priorities, and commitments change. It brings together project ownership, decision history, scheduling coordination, and checks that distinguish planned actions from verified results.
+I designed an AI-assisted operating framework to coordinate **eight academic workstreams** alongside career, leadership, and independent projects. The problem was practical: requirements, deadlines, and decisions lived in separate workspaces, documents, and calendars. A change could be recorded in one place while another area continued using the older information.
 
-**The problem:** Across coursework, career development, student leadership, and independent projects, important information lived in separate conversations, documents, and calendars. An updated deadline in one workspace could leave another plan relying on an older version. I wanted a system that could trace the change, identify the next action, and preserve what had already been decided.
+I built the framework around a clear question: **When something changes, how do we establish what is current, determine who owns the decision, coordinate any follow-up, and verify what actually happened?**
 
-## What I designed
+## What the system does
 
-| Component | Role in the system |
+| Design decision | Why it matters |
 |---|---|
-| **Workstream ownership** | Each project maintains its requirements, decisions, and progress. |
-| **Three-layer knowledge structure** | Current state (**HOT**), decision history (**WARM**), and original evidence (**COLD**) serve different retrieval needs. |
-| **Source and change controls** | New information is checked against its source; replaced decisions remain traceable. |
-| **Scheduling handoffs** | Verified changes are considered alongside available time and protected commitments. |
-| **Execution checks** | Proposed, authorized, scheduled, completed, and verified work are tracked separately. |
+| Give each workstream an owner | The source responsible for a requirement controls changes to it |
+| Separate current state, decision history, and original sources | Important decisions remain easy to find without losing why they changed |
+| Check revisions and conflicting evidence | A newer-looking update does not automatically become the truth |
+| Require explicit approval before consequential changes | Proposed calendar work is not automatically scheduled |
+| Distinguish planned, authorized, scheduled, and completed work | A polished report or calendar event is not proof the underlying task happened |
+| Record and correct real failures | Preserving history is not enough if the wrong conversation thread is resumed |
 
-## How it works
+The framework uses structured records, source hierarchy, operating rules, file-management tools, and scheduling handoffs. I designed the responsibilities, decision controls, information structure, and quality checks; AI tools assisted with parts of the implementation and documentation. [See the operating architecture](docs/ARCHITECTURE.md).
 
-```mermaid
-flowchart TD
-    A[Requirement changes in a workstream] --> B{Source verified?}
-    B -->|No| C[Review original evidence]
-    C --> B
-    B -->|Yes| D[Update current state and decision history]
-    D --> E{Action needed?}
-    E -->|Yes| F[Check constraints and authorization]
-    F --> G[Execute and verify result]
-    E -->|No| H[Keep records current]
-    G --> H
-```
+## A real failure and two small executable examples
 
-The operating rules connect ChatGPT workspaces, structured records, and scheduling and file-management tools. Each workstream remains responsible for its own information, while shared procedures guide changes that affect other areas.
+**Real incident — choosing the wrong work to resume.** After a lengthy continuity discussion, a request to return to earlier work was misinterpreted. The assistant had retained the relevant history but selected another workstream. I analyzed the failure and refined the rules for identifying historical stopping points and respecting action authority. [See B01 and the correction](docs/B01_FAILURE_AND_RECOVERY.md).
 
-[Explore the full architecture](docs/ARCHITECTURE.md).
+**A01 — a deadline changes.** Fictional inputs move a deadline from November 20 to November 18. The Python model selects the verified owner update, finds available time around protected commitments, requires authorization, writes to an **in-memory** calendar, and reads back the written state. A calendar write never marks the underlying task completed. [Explore A01](docs/A01_WORKFLOW.md).
 
-## Two examples
+**B01 — select the correct conversation context.** A deliberately small rule model distinguishes a named earlier stopping point, ambiguous continuation, and an entirely new task such as “Update my resume.” It is **not** a general natural-language assistant. [Explore B01](docs/B01_FAILURE_AND_RECOVERY.md).
 
-**A01 — A deadline moves.** In a fictional scenario, a project deadline changes from **November 20 to November 18**. The model selects the verified update, finds work periods around protected commitments, and waits for authorization before recording a simulated change. It never marks the underlying task complete simply because time was scheduled. **10/10 automated tests passed.** [See the workflow](docs/A01_WORKFLOW.md).
+The Python examples are **fictional demonstrations of selected rules**, not software that controls my real calendar or proof of the framework's real-world productivity gains. [See the evidence boundaries and redacted real-record excerpts](docs/EVIDENCE_AND_METHODOLOGY.md).
 
-**B01 — The wrong task gets resumed.** In a documented continuity incident, historical information had been preserved, but the assistant selected the wrong work to continue. I analyzed the context-selection error and refined the rules for source review and action authority. An accompanying fictional reference model tests those decision rules. **11/11 automated tests passed.** [Read the analysis](docs/B01_FAILURE_AND_RECOVERY.md).
+## Run the examples
 
-## Explore the project
-
-- [Detailed operating model](docs/ARCHITECTURE.md) · [Project overview](docs/PROJECT_BRIEF.md)
-- [Reproduction guide](docs/REPRODUCE.md) · [Evidence and methodology](docs/EVIDENCE_AND_METHODOLOGY.md)
-
-The demonstrations use Python's standard library and fictional fixtures. To run all 21 local tests:
+Python **3.10+**, standard library only:
 
 ```bash
-(cd demos/a01 && python -m unittest discover -s tests -v)
-(cd demos/b01 && python -m unittest discover -s tests -v)
+python -m unittest discover -s demos/a01/tests -v
+python -m unittest discover -s demos/b01/tests -v
+
+python demos/a01/src/a01_simulation.py demos/a01/fixtures/a01_fictional_scenario.json --authorized --commit
+python demos/b01/src/b01_reference_model.py demos/b01/fixtures/b01_synthetic_cases.json
 ```
+
+[![Python tests](https://github.com/ubongbuzzz-dev/ai-operations-knowledge-management/actions/workflows/tests.yml/badge.svg)](https://github.com/ubongbuzzz-dev/ai-operations-knowledge-management/actions/workflows/tests.yml)
+
+The unit tests check expected behavior and failure cases; the badge reports GitHub Actions' automated status when runs are available. Neither validates the live ChatGPT workspaces.
