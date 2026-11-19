@@ -20,7 +20,7 @@ This is a short, unaltered excerpt of a longer private status entry; other field
 
 **WARM — the November 4 correction.** The recorded earlier behavior was to select another workstream after a request to return to work *before* a protocol discussion. The corrective decision states:
 
-> “A bare ‘continue where we left off’ must use the user's immediate conversational referent, not blindly select the newest line of the historical source.”
+> A bare “continue where we left off” must use the user's *immediate conversational referent*, not blindly select the newest line of the historical source.
 
 The behavioral description is a privacy-safe summary; the quoted corrective sentence is from the dated source. It illustrates the change from an **observed wrong selection** to an **explicit corrective rule**. Writing the rule did not itself establish that future assistants would follow it.
 
