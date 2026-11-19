@@ -1,14 +1,172 @@
 {
-  "context": {"selected_topic": null, "previous_explicit_topic": "APG_POST_DESIGN_EXECUTION", "has_competing_referents": true, "action_authorized": false},
-  "requests": [
-    "Continue original parent at its literal end",
-    "Return to APG work before UCP",
-    "Continue where we left off",
-    "Check scheduler handoff"
-  ],
-  "claims": [
-    {"claim_id":"incident_is_recorded","source_type":"historical_record","contains_private_data":true},
-    {"claim_id":"simulation_runs_locally","source_type":"synthetic_test","contains_private_data":false},
-    {"claim_id":"real_world_fix_permanently_works","source_type":"not_verified","contains_private_data":false}
+  "description": "Independent plain-language regression cases for B01; fictional context identifiers.",
+  "cases": [
+    {
+      "name": "original parent literal end",
+      "request": "Continue original parent at its literal end",
+      "context": {},
+      "expected_status": "CONTEXT_RESOLVED",
+      "expected_topic": "UCP_VALIDATION",
+      "expected_action": "REVIEW_ONLY"
+    },
+    {
+      "name": "last message explicit",
+      "request": "Pick up the parent chat at its final message",
+      "context": {},
+      "expected_status": "CONTEXT_RESOLVED",
+      "expected_topic": "UCP_VALIDATION",
+      "expected_action": "REVIEW_ONLY"
+    },
+    {
+      "name": "before UCP shorthand",
+      "request": "Resume before all the UCP stuff",
+      "context": {},
+      "expected_status": "CONTEXT_RESOLVED",
+      "expected_topic": "APG_POST_DESIGN_EXECUTION",
+      "expected_action": "REVIEW_ONLY"
+    },
+    {
+      "name": "real incident plain language",
+      "request": "Go back to what we were doing before the protocol discussion",
+      "context": {},
+      "expected_status": "CONTEXT_RESOLVED",
+      "expected_topic": "APG_POST_DESIGN_EXECUTION",
+      "expected_action": "REVIEW_ONLY"
+    },
+    {
+      "name": "before continuity protocol",
+      "request": "Please return to the work from prior to the continuity protocol",
+      "context": {},
+      "expected_status": "CONTEXT_RESOLVED",
+      "expected_topic": "APG_POST_DESIGN_EXECUTION",
+      "expected_action": "REVIEW_ONLY"
+    },
+    {
+      "name": "after UCP is not before",
+      "request": "Return to APG after UCP",
+      "context": {
+        "previous_explicit_topic": "APG_POST_DESIGN_EXECUTION"
+      },
+      "expected_status": "CLARIFICATION_REQUIRED",
+      "expected_topic": null,
+      "expected_action": "NONE"
+    },
+    {
+      "name": "known post-protocol reference",
+      "request": "Return to APG after UCP",
+      "context": {
+        "post_protocol_topic": "APG_AFTER_PROTOCOL"
+      },
+      "expected_status": "CONTEXT_RESOLVED",
+      "expected_topic": "APG_AFTER_PROTOCOL",
+      "expected_action": "REVIEW_ONLY"
+    },
+    {
+      "name": "new resume task not conversation",
+      "request": "Update my resume",
+      "context": {
+        "selected_topic": "APG_POST_DESIGN_EXECUTION"
+      },
+      "expected_status": "NEW_REQUEST",
+      "expected_topic": null,
+      "expected_action": "USER_REQUESTED_SCOPE_ONLY"
+    },
+    {
+      "name": "new resume review task",
+      "request": "Could you review my resume?",
+      "context": {
+        "selected_topic": "APG_POST_DESIGN_EXECUTION"
+      },
+      "expected_status": "NEW_REQUEST",
+      "expected_topic": null,
+      "expected_action": "USER_REQUESTED_SCOPE_ONLY"
+    },
+    {
+      "name": "specific scheduler handoff",
+      "request": "Check the scheduler handoff",
+      "context": {},
+      "expected_status": "CONTEXT_RESOLVED",
+      "expected_topic": "SCHEDULER_HANDOFF_STATUS",
+      "expected_action": "REVIEW_ONLY"
+    },
+    {
+      "name": "ambiguous continuation multiple topics",
+      "request": "Continue where we left off",
+      "context": {
+        "has_competing_referents": true,
+        "previous_explicit_topic": "APG_POST_DESIGN_EXECUTION"
+      },
+      "expected_status": "CLARIFICATION_REQUIRED",
+      "expected_topic": null,
+      "expected_action": "NONE"
+    },
+    {
+      "name": "clear active conversational topic",
+      "request": "Continue where we left off",
+      "context": {
+        "selected_topic": "APG_CURRENT_LEAD",
+        "has_competing_referents": true
+      },
+      "expected_status": "CONTEXT_RESOLVED",
+      "expected_topic": "APG_CURRENT_LEAD",
+      "expected_action": "REVIEW_ONLY"
+    },
+    {
+      "name": "single prior topic no competitors",
+      "request": "Please resume",
+      "context": {
+        "previous_explicit_topic": "APG_POST_DESIGN_EXECUTION",
+        "has_competing_referents": false
+      },
+      "expected_status": "CONTEXT_RESOLVED",
+      "expected_topic": "APG_POST_DESIGN_EXECUTION",
+      "expected_action": "REVIEW_ONLY"
+    },
+    {
+      "name": "specific APG from known context",
+      "request": "Return to APG work",
+      "context": {
+        "previous_explicit_topic": "APG_POST_DESIGN_EXECUTION"
+      },
+      "expected_status": "CONTEXT_RESOLVED",
+      "expected_topic": "APG_POST_DESIGN_EXECUTION",
+      "expected_action": "REVIEW_ONLY"
+    },
+    {
+      "name": "APG without known checkpoint",
+      "request": "Return to Academic Professional Growth",
+      "context": {},
+      "expected_status": "CLARIFICATION_REQUIRED",
+      "expected_topic": null,
+      "expected_action": "NONE"
+    },
+    {
+      "name": "explicitly scoped authorization",
+      "request": "Go back to what we were doing before the protocol discussion",
+      "context": {
+        "action_authorized": true
+      },
+      "expected_status": "CONTEXT_RESOLVED",
+      "expected_topic": "APG_POST_DESIGN_EXECUTION",
+      "expected_action": "USER_AUTHORIZED_SCOPE_ONLY"
+    },
+    {
+      "name": "no instructions",
+      "request": "",
+      "context": {},
+      "expected_status": "CLARIFICATION_REQUIRED",
+      "expected_topic": null,
+      "expected_action": "NONE"
+    },
+    {
+      "name": "unrelated text",
+      "request": "What is an example of a data source?",
+      "context": {
+        "selected_topic": "APG_CURRENT_LEAD"
+      },
+      "expected_status": "CLARIFICATION_REQUIRED",
+      "expected_topic": null,
+      "expected_action": "NONE"
+    }
   ]
 }

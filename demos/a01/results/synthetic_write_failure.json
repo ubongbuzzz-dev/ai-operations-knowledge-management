@@ -29,8 +29,8 @@
   "task_status": "NOT_COMPLETED",
   "existing_preserved": true,
   "events": [
-    "Owner revision 2 selected; earlier deadline kept as history",
-    "Synthetic write failed; no committed blocks reported"
+    "Verified owner revision 2 selected; old deadline retained as history",
+    "Simulated write failed; no committed blocks reported"
   ],
   "status": "WRITE_FAILED_NO_COMMIT"
 }

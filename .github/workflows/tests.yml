@@ -1,0 +1,71 @@
+name: Python examples
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Compile the example modules
+        run: python -m compileall -q demos/a01/src demos/b01/src
+      - name: A01 unit and edge-case tests
+        run: python -m unittest discover -s demos/a01/tests -v
+      - name: B01 case-based and regression tests
+        run: python -m unittest discover -s demos/b01/tests -v
+      - name: Verify committed JSON snapshots against executed model output
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          import sys
+          from pathlib import Path
+
+          checks = [
+              (
+                  "demos/a01/results/unapproved_result.json",
+                  ["demos/a01/src/a01_simulation.py",
+                   "demos/a01/fixtures/a01_fictional_scenario.json"],
+              ),
+              (
+                  "demos/a01/results/authorized_synthetic_result.json",
+                  ["demos/a01/src/a01_simulation.py",
+                   "demos/a01/fixtures/a01_fictional_scenario.json",
+                   "--authorized", "--commit"],
+              ),
+              (
+                  "demos/a01/results/synthetic_write_failure.json",
+                  ["demos/a01/src/a01_simulation.py",
+                   "demos/a01/fixtures/a01_fictional_scenario.json",
+                   "--authorized", "--commit", "--write-fail"],
+              ),
+              (
+                  "demos/b01/results/synthetic_run.json",
+                  ["demos/b01/src/b01_reference_model.py",
+                   "demos/b01/fixtures/b01_synthetic_cases.json"],
+              ),
+          ]
+          for path, command in checks:
+              output = subprocess.check_output([sys.executable, *command], text=True)
+              expected = json.loads(Path(path).read_text(encoding="utf-8"))
+              actual = json.loads(output)
+              if actual != expected:
+                  raise SystemExit(f"Snapshot mismatch: {path}")
+              print(f"Verified: {path}")
+          PY
+      - name: Run example commands
+        run: |
+          python demos/a01/src/a01_simulation.py demos/a01/fixtures/a01_fictional_scenario.json --authorized --commit > /dev/null
+          python demos/b01/src/b01_reference_model.py demos/b01/fixtures/b01_synthetic_cases.json > /dev/null
